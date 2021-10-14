@@ -63,7 +63,7 @@ skinparam DefaultFontName IPAexGothic
   }
 }}" as index
 
-index --> "{{
+index -r-> "{{
   salt
   {
     { ログイン }
@@ -71,10 +71,31 @@ index --> "{{
     { [Twitter] | [Pixiv] | [ニコニコ静画] | … }
   }
 }}" as login
-login --> "各サービス認証画面" as authenticator
-authenticator --> index
 
-index --> "{{
+login --> "{{
+  salt
+  {
+    { 新規登録 }
+
+    {
+      username
+
+      "username"
+
+      [ 登録 ]
+    }
+  }
+}}" as register
+
+login --> "{{
+  salt
+  {
+    { マイページ }
+  }
+}}" as my_page
+register --> my_page
+
+index -d-> "{{
   salt
   {
     { お題検索 }
@@ -101,7 +122,7 @@ index --> "{{
   }
 }}" as search_ideas
 
-index --> "{{
+index -d-> "{{
   salt
   {
     { 新着お題 }
@@ -115,7 +136,7 @@ index --> "{{
   }
 }}" as recent_ideas
 
-index -right-> "{{
+index -d-> "{{
   salt
   {
     { お題ランキング }
@@ -141,7 +162,7 @@ index -right-> "{{
   }
 }}" as idea_ranking
 
-index --> "{{
+index -d-> "{{
   salt
   {
     { 最近回答のあったお題 }
@@ -197,7 +218,24 @@ recent_responded_ideas --> idea_detail
 index --> idea_detail
 search_ideas --> idea_detail
 
-idea_detail -right-> "イラスト投稿サイト"
+idea_detail --> "イラスト投稿サイト"
+
+idea_detail --> "{{
+  salt
+  {
+    { ユーザページ }
+
+    {
+      {/ <b>出題</b> | 回答 }
+
+      {
+        ・～～～～～～～～～～
+        ・～～～～～～～～～～
+        ・～～～～～～～～～～
+      }
+    }
+  }
+}}" as user
 
 idea_detail --> "{{
   salt
@@ -217,7 +255,7 @@ idea_detail --> "{{
     }
   }
 }}" as respond
-respond --> authenticator
-authenticator --> respond
+respond ----> login
+login ----> respond
 
 @enduml
