@@ -169,18 +169,27 @@ recent_ideas --> "{{
   {
     {
       ～～～～～～～～～（お題）
-      回答イラスト
     }
 
     {
-      [ 画像 ] | ○○さん
+      [ このお題に回答する ]
     }
 
     {
-      [ 画像 ] | ○○さん
-    }
+      [ 回答イラストを見る ]
 
-    ︙（自動読み込み）
+      {
+        [ 画像 ] | [ 画像 ] | [ 画像 ]
+        ○○さん | ○○さん | ○○さん
+      }
+
+      {
+        [ 画像 ] | [ 画像 ] | [ 画像 ]
+        ○○さん | ○○さん | ○○さん
+      }
+
+      ︙（自動読み込み）
+    }
   }
 }}" as idea_detail
 idea_ranking --> idea_detail
@@ -188,6 +197,27 @@ recent_responded_ideas --> idea_detail
 index --> idea_detail
 search_ideas --> idea_detail
 
-idea_detail --> "イラスト投稿サイト"
+idea_detail -right-> "イラスト投稿サイト"
+
+idea_detail --> "{{
+  salt
+  {
+    {
+      お題「～～～～～～～～～」に回答する
+    }
+
+    {
+      { 回答イラストを登録する }
+
+      { "https://example.com/illust/xxxxxx" | [確認] }
+
+      { [ サムネ ] }
+
+      { [ 回答 ] }
+    }
+  }
+}}" as respond
+respond --> authenticator
+authenticator --> respond
 
 @enduml
