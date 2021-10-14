@@ -9,4 +9,4 @@ SVGS = $(patsubst ./%.pu,img/%.svg,$(UMLS))
 img: $(SVGS)
 
 img/%.svg: %.pu
-	@plantuml -tsvg -o $(MAKEFILE_DIR)/img/$(dir $<) $?
+	@plantuml -tsvg -nometadata -o $(MAKEFILE_DIR)/img/$(dir $<) $?
