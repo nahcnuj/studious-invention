@@ -1,0 +1,57 @@
+@startuml entities
+skinparam DefaultFontName IPAexGothic
+hide empty members
+
+package "データベース" as database {
+    entity "お題" as idea {
+        +お題 ID [PK]
+         お題
+        #ユーザ ID [FK]
+         created_at
+    }
+
+    entity "回答イラスト" as response {
+        +回答 ID [PK]
+         イラスト URI
+        #ユーザ ID [FK]
+         created_at
+    }
+
+    entity "ユーザ" as user {
+        +ユーザ ID [PK]
+         ユーザ名
+         created_at
+         updated_at
+    }
+    'ユーザ ID は認証サービスが発行したもの
+
+    entity "ID プロバイダ" as user_id_provider {
+        #ユーザ ID [FK]
+         プロバイダ
+         プロバイダ側 ユーザ ID
+         created_at
+    }
+
+    idea -d-o{ response
+    user -|{ user_id_provider
+    user |o-l-o{ idea
+    user -l-o{ response
+}
+
+package "認証サービス" as user_authenticator {
+    /'
+        候補
+        - Amazon Cognito
+        - Firebase Authentication
+        - etc.
+    '/
+
+    entity "User Pool" as user_pool {
+        +ユーザ ID
+         ユーザ名
+    }
+}
+
+user -- user_pool
+
+@enduml
