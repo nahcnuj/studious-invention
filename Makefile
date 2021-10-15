@@ -1,15 +1,19 @@
-.PHONY:	all build run up restart down
+.PHONY:	all
+all: api-server api-document
 
-all: api-skelton-server build
+.PHONY: api-server api-skelton-server api-document
+api-server: api-skelton-server api-document
+	@docker compose build api
 
-build: docker-compose.yml
-	@$(MAKE) down
-	@docker compose build
-	@$(MAKE) up
+api-skelton-server: internal/api/v1-default
+internal/api/v1-default: api/openapi-schema/openapi.yaml
+	@scripts/generate-openapi-default-server.bash $< $@
 
-run: build
-	@docker compose up
+api-document: docs/api/v1
+docs/api/v1: api/openapi-schema/openapi.yaml
+	@#scripts/generate-openapi-document.bash $< $@
 
+.PHONY: up restart down reboot
 up:
 	@docker compose up -d
 
@@ -19,8 +23,4 @@ restart:
 down:
 	@docker compose down
 
-.PHONY: api-skelton-server
-api-skelton-server: internal/api/v1-default
-
-internal/api/v1-default: api/openapi-schema/openapi.yaml
-	@scripts/generate-openapi-default-server.bash $< $@
+reboot: down up
