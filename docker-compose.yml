@@ -7,5 +7,22 @@ services:
       dockerfile: build/package/api/Dockerfile
       context: .
     container_name: api
+    environment:
+      TZ: Asia/Tokyo
     ports:
       - 8000:8080
+
+  db:
+    image: mysql:5.7
+    container_name: db
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_USER: mysql
+      MYSQL_PASSWORD: mysql
+      MYSQL_DATABASE: odai
+      TZ: Asia/Tokyo
+    volumes:
+      - ./var/db/data:/var/lib/mysql
+      - ./configs/dev/mysql/my.cnf:/etc/mysql/conf.d/my.cnf:ro
+    expose:
+      - 3306
