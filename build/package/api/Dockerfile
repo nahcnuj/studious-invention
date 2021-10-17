@@ -1,7 +1,7 @@
 FROM golang:1.17 AS build
 WORKDIR /go/src
+RUN ln -sf cmd/api/main.go
 COPY . ./.
-COPY cmd/api/main.go .
 
 ENV CGO_ENABLED=0
 RUN go get -d -v ./...
