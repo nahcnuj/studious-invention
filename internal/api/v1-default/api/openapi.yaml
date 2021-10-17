@@ -7,7 +7,7 @@ servers:
 - description: A local API server for development
   url: http://localhost:8000/v1/
 paths:
-  /ideas:
+  /themes:
     get:
       responses:
         "200":
@@ -15,11 +15,11 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/inline_response_200'
-          description: Returns ideas
-      summary: Returns ideas
+          description: Returns themes
+      summary: Returns themes
 components:
   schemas:
-    Idea:
+    theme:
       example:
         text: text
       properties:
@@ -28,12 +28,12 @@ components:
       type: object
     inline_response_200:
       example:
-        ideas:
+        themes:
         - text: text
         - text: text
       properties:
-        ideas:
+        themes:
           items:
-            $ref: '#/components/schemas/Idea'
+            $ref: '#/components/schemas/theme'
           type: array
       type: object

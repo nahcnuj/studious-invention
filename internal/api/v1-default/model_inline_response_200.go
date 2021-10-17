@@ -10,13 +10,13 @@
 package openapi
 
 type InlineResponse200 struct {
-	Ideas []Idea `json:"ideas,omitempty"`
+	Themes []Theme `json:"themes,omitempty"`
 }
 
 // AssertInlineResponse200Required checks if the required fields are not zero-ed
 func AssertInlineResponse200Required(obj InlineResponse200) error {
-	for _, el := range obj.Ideas {
-		if err := AssertIdeaRequired(el); err != nil {
+	for _, el := range obj.Themes {
+		if err := AssertThemeRequired(el); err != nil {
 			return err
 		}
 	}

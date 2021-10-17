@@ -11,25 +11,25 @@ servers:
 
 components:
   schemas:
-    Idea:
+    theme:
       type: object
       properties:
         text:
           type: string
 
 paths:
-  /ideas:
+  /themes:
     get:
-      summary: Returns ideas
+      summary: Returns themes
       responses:
         '200':
-          description: Returns ideas
+          description: Returns themes
           content:
             application/json:
               schema:
                 type: object
                 properties:
-                  ideas:
+                  themes:
                     type: array
                     items:
-                      $ref: '#/components/schemas/Idea'
+                      $ref: '#/components/schemas/theme'

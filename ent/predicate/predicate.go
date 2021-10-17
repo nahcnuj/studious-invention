@@ -6,5 +6,5 @@ import (
 	"entgo.io/ent/dialect/sql"
 )
 
-// Idea is the predicate function for idea builders.
-type Idea func(*sql.Selector)
+// Theme is the predicate function for theme builders.
+type Theme func(*sql.Selector)

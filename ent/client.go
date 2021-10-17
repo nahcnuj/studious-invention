@@ -9,7 +9,7 @@ import (
 
 	"github.com/nahcnuj/studious-invention/ent/migrate"
 
-	"github.com/nahcnuj/studious-invention/ent/idea"
+	"github.com/nahcnuj/studious-invention/ent/theme"
 
 	"entgo.io/ent/dialect"
 	"entgo.io/ent/dialect/sql"
@@ -20,8 +20,8 @@ type Client struct {
 	config
 	// Schema is the client for creating, migrating and dropping schema.
 	Schema *migrate.Schema
-	// Idea is the client for interacting with the Idea builders.
-	Idea *IdeaClient
+	// Theme is the client for interacting with the Theme builders.
+	Theme *ThemeClient
 }
 
 // NewClient creates a new client configured with the given options.
@@ -35,7 +35,7 @@ func NewClient(opts ...Option) *Client {
 
 func (c *Client) init() {
 	c.Schema = migrate.NewSchema(c.driver)
-	c.Idea = NewIdeaClient(c.config)
+	c.Theme = NewThemeClient(c.config)
 }
 
 // Open opens a database/sql.DB specified by the driver name and
@@ -69,7 +69,7 @@ func (c *Client) Tx(ctx context.Context) (*Tx, error) {
 	return &Tx{
 		ctx:    ctx,
 		config: cfg,
-		Idea:   NewIdeaClient(cfg),
+		Theme:  NewThemeClient(cfg),
 	}, nil
 }
 
@@ -88,14 +88,14 @@ func (c *Client) BeginTx(ctx context.Context, opts *sql.TxOptions) (*Tx, error) 
 	cfg.driver = &txDriver{tx: tx, drv: c.driver}
 	return &Tx{
 		config: cfg,
-		Idea:   NewIdeaClient(cfg),
+		Theme:  NewThemeClient(cfg),
 	}, nil
 }
 
 // Debug returns a new debug-client. It's used to get verbose logging on specific operations.
 //
 //	client.Debug().
-//		Idea.
+//		Theme.
 //		Query().
 //		Count(ctx)
 //
@@ -118,87 +118,87 @@ func (c *Client) Close() error {
 // Use adds the mutation hooks to all the entity clients.
 // In order to add hooks to a specific client, call: `client.Node.Use(...)`.
 func (c *Client) Use(hooks ...Hook) {
-	c.Idea.Use(hooks...)
+	c.Theme.Use(hooks...)
 }
 
-// IdeaClient is a client for the Idea schema.
-type IdeaClient struct {
+// ThemeClient is a client for the Theme schema.
+type ThemeClient struct {
 	config
 }
 
-// NewIdeaClient returns a client for the Idea from the given config.
-func NewIdeaClient(c config) *IdeaClient {
-	return &IdeaClient{config: c}
+// NewThemeClient returns a client for the Theme from the given config.
+func NewThemeClient(c config) *ThemeClient {
+	return &ThemeClient{config: c}
 }
 
 // Use adds a list of mutation hooks to the hooks stack.
-// A call to `Use(f, g, h)` equals to `idea.Hooks(f(g(h())))`.
-func (c *IdeaClient) Use(hooks ...Hook) {
-	c.hooks.Idea = append(c.hooks.Idea, hooks...)
+// A call to `Use(f, g, h)` equals to `theme.Hooks(f(g(h())))`.
+func (c *ThemeClient) Use(hooks ...Hook) {
+	c.hooks.Theme = append(c.hooks.Theme, hooks...)
 }
 
-// Create returns a create builder for Idea.
-func (c *IdeaClient) Create() *IdeaCreate {
-	mutation := newIdeaMutation(c.config, OpCreate)
-	return &IdeaCreate{config: c.config, hooks: c.Hooks(), mutation: mutation}
+// Create returns a create builder for Theme.
+func (c *ThemeClient) Create() *ThemeCreate {
+	mutation := newThemeMutation(c.config, OpCreate)
+	return &ThemeCreate{config: c.config, hooks: c.Hooks(), mutation: mutation}
 }
 
-// CreateBulk returns a builder for creating a bulk of Idea entities.
-func (c *IdeaClient) CreateBulk(builders ...*IdeaCreate) *IdeaCreateBulk {
-	return &IdeaCreateBulk{config: c.config, builders: builders}
+// CreateBulk returns a builder for creating a bulk of Theme entities.
+func (c *ThemeClient) CreateBulk(builders ...*ThemeCreate) *ThemeCreateBulk {
+	return &ThemeCreateBulk{config: c.config, builders: builders}
 }
 
-// Update returns an update builder for Idea.
-func (c *IdeaClient) Update() *IdeaUpdate {
-	mutation := newIdeaMutation(c.config, OpUpdate)
-	return &IdeaUpdate{config: c.config, hooks: c.Hooks(), mutation: mutation}
+// Update returns an update builder for Theme.
+func (c *ThemeClient) Update() *ThemeUpdate {
+	mutation := newThemeMutation(c.config, OpUpdate)
+	return &ThemeUpdate{config: c.config, hooks: c.Hooks(), mutation: mutation}
 }
 
 // UpdateOne returns an update builder for the given entity.
-func (c *IdeaClient) UpdateOne(i *Idea) *IdeaUpdateOne {
-	mutation := newIdeaMutation(c.config, OpUpdateOne, withIdea(i))
-	return &IdeaUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
+func (c *ThemeClient) UpdateOne(t *Theme) *ThemeUpdateOne {
+	mutation := newThemeMutation(c.config, OpUpdateOne, withTheme(t))
+	return &ThemeUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
 }
 
 // UpdateOneID returns an update builder for the given id.
-func (c *IdeaClient) UpdateOneID(id int) *IdeaUpdateOne {
-	mutation := newIdeaMutation(c.config, OpUpdateOne, withIdeaID(id))
-	return &IdeaUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
+func (c *ThemeClient) UpdateOneID(id int) *ThemeUpdateOne {
+	mutation := newThemeMutation(c.config, OpUpdateOne, withThemeID(id))
+	return &ThemeUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
 }
 
-// Delete returns a delete builder for Idea.
-func (c *IdeaClient) Delete() *IdeaDelete {
-	mutation := newIdeaMutation(c.config, OpDelete)
-	return &IdeaDelete{config: c.config, hooks: c.Hooks(), mutation: mutation}
+// Delete returns a delete builder for Theme.
+func (c *ThemeClient) Delete() *ThemeDelete {
+	mutation := newThemeMutation(c.config, OpDelete)
+	return &ThemeDelete{config: c.config, hooks: c.Hooks(), mutation: mutation}
 }
 
 // DeleteOne returns a delete builder for the given entity.
-func (c *IdeaClient) DeleteOne(i *Idea) *IdeaDeleteOne {
-	return c.DeleteOneID(i.ID)
+func (c *ThemeClient) DeleteOne(t *Theme) *ThemeDeleteOne {
+	return c.DeleteOneID(t.ID)
 }
 
 // DeleteOneID returns a delete builder for the given id.
-func (c *IdeaClient) DeleteOneID(id int) *IdeaDeleteOne {
-	builder := c.Delete().Where(idea.ID(id))
+func (c *ThemeClient) DeleteOneID(id int) *ThemeDeleteOne {
+	builder := c.Delete().Where(theme.ID(id))
 	builder.mutation.id = &id
 	builder.mutation.op = OpDeleteOne
-	return &IdeaDeleteOne{builder}
+	return &ThemeDeleteOne{builder}
 }
 
-// Query returns a query builder for Idea.
-func (c *IdeaClient) Query() *IdeaQuery {
-	return &IdeaQuery{
+// Query returns a query builder for Theme.
+func (c *ThemeClient) Query() *ThemeQuery {
+	return &ThemeQuery{
 		config: c.config,
 	}
 }
 
-// Get returns a Idea entity by its id.
-func (c *IdeaClient) Get(ctx context.Context, id int) (*Idea, error) {
-	return c.Query().Where(idea.ID(id)).Only(ctx)
+// Get returns a Theme entity by its id.
+func (c *ThemeClient) Get(ctx context.Context, id int) (*Theme, error) {
+	return c.Query().Where(theme.ID(id)).Only(ctx)
 }
 
 // GetX is like Get, but panics if an error occurs.
-func (c *IdeaClient) GetX(ctx context.Context, id int) *Idea {
+func (c *ThemeClient) GetX(ctx context.Context, id int) *Theme {
 	obj, err := c.Get(ctx, id)
 	if err != nil {
 		panic(err)
@@ -207,6 +207,6 @@ func (c *IdeaClient) GetX(ctx context.Context, id int) *Idea {
 }
 
 // Hooks returns the client hooks.
-func (c *IdeaClient) Hooks() []Hook {
-	return c.hooks.Idea
+func (c *ThemeClient) Hooks() []Hook {
+	return c.hooks.Theme
 }

@@ -51,17 +51,17 @@ func NewDefaultApiController(s DefaultApiServicer, opts ...DefaultApiOption) Rou
 func (c *DefaultApiController) Routes() Routes {
 	return Routes{
 		{
-			"IdeasGet",
+			"ThemesGet",
 			strings.ToUpper("Get"),
-			"/v1/ideas",
-			c.IdeasGet,
+			"/v1/themes",
+			c.ThemesGet,
 		},
 	}
 }
 
-// IdeasGet - Returns ideas
-func (c *DefaultApiController) IdeasGet(w http.ResponseWriter, r *http.Request) {
-	result, err := c.service.IdeasGet(r.Context())
+// ThemesGet - Returns themes
+func (c *DefaultApiController) ThemesGet(w http.ResponseWriter, r *http.Request) {
+	result, err := c.service.ThemesGet(r.Context())
 	// If an error occurred, encode the error with the status code
 	if err != nil {
 		c.errorHandler(w, r, err, &result)

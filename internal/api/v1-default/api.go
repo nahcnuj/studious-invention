@@ -18,7 +18,7 @@ import (
 // The DefaultApiRouter implementation should parse necessary information from the http request,
 // pass the data to a DefaultApiServicer to perform the required actions, then write the service results to the http response.
 type DefaultApiRouter interface {
-	IdeasGet(http.ResponseWriter, *http.Request)
+	ThemesGet(http.ResponseWriter, *http.Request)
 }
 
 // DefaultApiServicer defines the api actions for the DefaultApi service
@@ -26,5 +26,5 @@ type DefaultApiRouter interface {
 // while the service implementation can ignored with the .openapi-generator-ignore file
 // and updated with the logic required for the API.
 type DefaultApiServicer interface {
-	IdeasGet(context.Context) (ImplResponse, error)
+	ThemesGet(context.Context) (ImplResponse, error)
 }

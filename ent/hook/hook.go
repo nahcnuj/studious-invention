@@ -9,15 +9,15 @@ import (
 	"github.com/nahcnuj/studious-invention/ent"
 )
 
-// The IdeaFunc type is an adapter to allow the use of ordinary
-// function as Idea mutator.
-type IdeaFunc func(context.Context, *ent.IdeaMutation) (ent.Value, error)
+// The ThemeFunc type is an adapter to allow the use of ordinary
+// function as Theme mutator.
+type ThemeFunc func(context.Context, *ent.ThemeMutation) (ent.Value, error)
 
 // Mutate calls f(ctx, m).
-func (f IdeaFunc) Mutate(ctx context.Context, m ent.Mutation) (ent.Value, error) {
-	mv, ok := m.(*ent.IdeaMutation)
+func (f ThemeFunc) Mutate(ctx context.Context, m ent.Mutation) (ent.Value, error) {
+	mv, ok := m.(*ent.ThemeMutation)
 	if !ok {
-		return nil, fmt.Errorf("unexpected mutation type %T. expect *ent.IdeaMutation", m)
+		return nil, fmt.Errorf("unexpected mutation type %T. expect *ent.ThemeMutation", m)
 	}
 	return f(ctx, mv)
 }

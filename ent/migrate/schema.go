@@ -8,19 +8,19 @@ import (
 )
 
 var (
-	// IdeasColumns holds the columns for the "ideas" table.
-	IdeasColumns = []*schema.Column{
+	// ThemesColumns holds the columns for the "themes" table.
+	ThemesColumns = []*schema.Column{
 		{Name: "id", Type: field.TypeInt, Increment: true},
 	}
-	// IdeasTable holds the schema information for the "ideas" table.
-	IdeasTable = &schema.Table{
-		Name:       "ideas",
-		Columns:    IdeasColumns,
-		PrimaryKey: []*schema.Column{IdeasColumns[0]},
+	// ThemesTable holds the schema information for the "themes" table.
+	ThemesTable = &schema.Table{
+		Name:       "themes",
+		Columns:    ThemesColumns,
+		PrimaryKey: []*schema.Column{ThemesColumns[0]},
 	}
 	// Tables holds all the tables in the schema.
 	Tables = []*schema.Table{
-		IdeasTable,
+		ThemesTable,
 	}
 )
 

@@ -8,56 +8,56 @@ import (
 
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
-	"github.com/nahcnuj/studious-invention/ent/idea"
+	"github.com/nahcnuj/studious-invention/ent/theme"
 )
 
-// IdeaCreate is the builder for creating a Idea entity.
-type IdeaCreate struct {
+// ThemeCreate is the builder for creating a Theme entity.
+type ThemeCreate struct {
 	config
-	mutation *IdeaMutation
+	mutation *ThemeMutation
 	hooks    []Hook
 }
 
-// Mutation returns the IdeaMutation object of the builder.
-func (ic *IdeaCreate) Mutation() *IdeaMutation {
-	return ic.mutation
+// Mutation returns the ThemeMutation object of the builder.
+func (tc *ThemeCreate) Mutation() *ThemeMutation {
+	return tc.mutation
 }
 
-// Save creates the Idea in the database.
-func (ic *IdeaCreate) Save(ctx context.Context) (*Idea, error) {
+// Save creates the Theme in the database.
+func (tc *ThemeCreate) Save(ctx context.Context) (*Theme, error) {
 	var (
 		err  error
-		node *Idea
+		node *Theme
 	)
-	if len(ic.hooks) == 0 {
-		if err = ic.check(); err != nil {
+	if len(tc.hooks) == 0 {
+		if err = tc.check(); err != nil {
 			return nil, err
 		}
-		node, err = ic.sqlSave(ctx)
+		node, err = tc.sqlSave(ctx)
 	} else {
 		var mut Mutator = MutateFunc(func(ctx context.Context, m Mutation) (Value, error) {
-			mutation, ok := m.(*IdeaMutation)
+			mutation, ok := m.(*ThemeMutation)
 			if !ok {
 				return nil, fmt.Errorf("unexpected mutation type %T", m)
 			}
-			if err = ic.check(); err != nil {
+			if err = tc.check(); err != nil {
 				return nil, err
 			}
-			ic.mutation = mutation
-			if node, err = ic.sqlSave(ctx); err != nil {
+			tc.mutation = mutation
+			if node, err = tc.sqlSave(ctx); err != nil {
 				return nil, err
 			}
 			mutation.id = &node.ID
 			mutation.done = true
 			return node, err
 		})
-		for i := len(ic.hooks) - 1; i >= 0; i-- {
-			if ic.hooks[i] == nil {
+		for i := len(tc.hooks) - 1; i >= 0; i-- {
+			if tc.hooks[i] == nil {
 				return nil, fmt.Errorf("ent: uninitialized hook (forgotten import ent/runtime?)")
 			}
-			mut = ic.hooks[i](mut)
+			mut = tc.hooks[i](mut)
 		}
-		if _, err := mut.Mutate(ctx, ic.mutation); err != nil {
+		if _, err := mut.Mutate(ctx, tc.mutation); err != nil {
 			return nil, err
 		}
 	}
@@ -65,8 +65,8 @@ func (ic *IdeaCreate) Save(ctx context.Context) (*Idea, error) {
 }
 
 // SaveX calls Save and panics if Save returns an error.
-func (ic *IdeaCreate) SaveX(ctx context.Context) *Idea {
-	v, err := ic.Save(ctx)
+func (tc *ThemeCreate) SaveX(ctx context.Context) *Theme {
+	v, err := tc.Save(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -74,26 +74,26 @@ func (ic *IdeaCreate) SaveX(ctx context.Context) *Idea {
 }
 
 // Exec executes the query.
-func (ic *IdeaCreate) Exec(ctx context.Context) error {
-	_, err := ic.Save(ctx)
+func (tc *ThemeCreate) Exec(ctx context.Context) error {
+	_, err := tc.Save(ctx)
 	return err
 }
 
 // ExecX is like Exec, but panics if an error occurs.
-func (ic *IdeaCreate) ExecX(ctx context.Context) {
-	if err := ic.Exec(ctx); err != nil {
+func (tc *ThemeCreate) ExecX(ctx context.Context) {
+	if err := tc.Exec(ctx); err != nil {
 		panic(err)
 	}
 }
 
 // check runs all checks and user-defined validators on the builder.
-func (ic *IdeaCreate) check() error {
+func (tc *ThemeCreate) check() error {
 	return nil
 }
 
-func (ic *IdeaCreate) sqlSave(ctx context.Context) (*Idea, error) {
-	_node, _spec := ic.createSpec()
-	if err := sqlgraph.CreateNode(ctx, ic.driver, _spec); err != nil {
+func (tc *ThemeCreate) sqlSave(ctx context.Context) (*Theme, error) {
+	_node, _spec := tc.createSpec()
+	if err := sqlgraph.CreateNode(ctx, tc.driver, _spec); err != nil {
 		if sqlgraph.IsConstraintError(err) {
 			err = &ConstraintError{err.Error(), err}
 		}
@@ -104,36 +104,36 @@ func (ic *IdeaCreate) sqlSave(ctx context.Context) (*Idea, error) {
 	return _node, nil
 }
 
-func (ic *IdeaCreate) createSpec() (*Idea, *sqlgraph.CreateSpec) {
+func (tc *ThemeCreate) createSpec() (*Theme, *sqlgraph.CreateSpec) {
 	var (
-		_node = &Idea{config: ic.config}
+		_node = &Theme{config: tc.config}
 		_spec = &sqlgraph.CreateSpec{
-			Table: idea.Table,
+			Table: theme.Table,
 			ID: &sqlgraph.FieldSpec{
 				Type:   field.TypeInt,
-				Column: idea.FieldID,
+				Column: theme.FieldID,
 			},
 		}
 	)
 	return _node, _spec
 }
 
-// IdeaCreateBulk is the builder for creating many Idea entities in bulk.
-type IdeaCreateBulk struct {
+// ThemeCreateBulk is the builder for creating many Theme entities in bulk.
+type ThemeCreateBulk struct {
 	config
-	builders []*IdeaCreate
+	builders []*ThemeCreate
 }
 
-// Save creates the Idea entities in the database.
-func (icb *IdeaCreateBulk) Save(ctx context.Context) ([]*Idea, error) {
-	specs := make([]*sqlgraph.CreateSpec, len(icb.builders))
-	nodes := make([]*Idea, len(icb.builders))
-	mutators := make([]Mutator, len(icb.builders))
-	for i := range icb.builders {
+// Save creates the Theme entities in the database.
+func (tcb *ThemeCreateBulk) Save(ctx context.Context) ([]*Theme, error) {
+	specs := make([]*sqlgraph.CreateSpec, len(tcb.builders))
+	nodes := make([]*Theme, len(tcb.builders))
+	mutators := make([]Mutator, len(tcb.builders))
+	for i := range tcb.builders {
 		func(i int, root context.Context) {
-			builder := icb.builders[i]
+			builder := tcb.builders[i]
 			var mut Mutator = MutateFunc(func(ctx context.Context, m Mutation) (Value, error) {
-				mutation, ok := m.(*IdeaMutation)
+				mutation, ok := m.(*ThemeMutation)
 				if !ok {
 					return nil, fmt.Errorf("unexpected mutation type %T", m)
 				}
@@ -144,11 +144,11 @@ func (icb *IdeaCreateBulk) Save(ctx context.Context) ([]*Idea, error) {
 				nodes[i], specs[i] = builder.createSpec()
 				var err error
 				if i < len(mutators)-1 {
-					_, err = mutators[i+1].Mutate(root, icb.builders[i+1].mutation)
+					_, err = mutators[i+1].Mutate(root, tcb.builders[i+1].mutation)
 				} else {
 					spec := &sqlgraph.BatchCreateSpec{Nodes: specs}
 					// Invoke the actual operation on the latest mutation in the chain.
-					if err = sqlgraph.BatchCreate(ctx, icb.driver, spec); err != nil {
+					if err = sqlgraph.BatchCreate(ctx, tcb.driver, spec); err != nil {
 						if sqlgraph.IsConstraintError(err) {
 							err = &ConstraintError{err.Error(), err}
 						}
@@ -172,7 +172,7 @@ func (icb *IdeaCreateBulk) Save(ctx context.Context) ([]*Idea, error) {
 		}(i, ctx)
 	}
 	if len(mutators) > 0 {
-		if _, err := mutators[0].Mutate(ctx, icb.builders[0].mutation); err != nil {
+		if _, err := mutators[0].Mutate(ctx, tcb.builders[0].mutation); err != nil {
 			return nil, err
 		}
 	}
@@ -180,8 +180,8 @@ func (icb *IdeaCreateBulk) Save(ctx context.Context) ([]*Idea, error) {
 }
 
 // SaveX is like Save, but panics if an error occurs.
-func (icb *IdeaCreateBulk) SaveX(ctx context.Context) []*Idea {
-	v, err := icb.Save(ctx)
+func (tcb *ThemeCreateBulk) SaveX(ctx context.Context) []*Theme {
+	v, err := tcb.Save(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -189,14 +189,14 @@ func (icb *IdeaCreateBulk) SaveX(ctx context.Context) []*Idea {
 }
 
 // Exec executes the query.
-func (icb *IdeaCreateBulk) Exec(ctx context.Context) error {
-	_, err := icb.Save(ctx)
+func (tcb *ThemeCreateBulk) Exec(ctx context.Context) error {
+	_, err := tcb.Save(ctx)
 	return err
 }
 
 // ExecX is like Exec, but panics if an error occurs.
-func (icb *IdeaCreateBulk) ExecX(ctx context.Context) {
-	if err := icb.Exec(ctx); err != nil {
+func (tcb *ThemeCreateBulk) ExecX(ctx context.Context) {
+	if err := tcb.Exec(ctx); err != nil {
 		panic(err)
 	}
 }
