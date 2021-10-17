@@ -13,14 +13,13 @@ import (
 	"log"
 	"net/http"
 
-	impl "github.com/nahcnuj/studious-invention/internal/api/v1"
-	openapi "github.com/nahcnuj/studious-invention/internal/api/v1-default"
+	openapi "github.com/nahcnuj/studious-invention/internal/api"
 )
 
 func main() {
 	log.Printf("Server started")
 
-	ApiService := impl.NewApiService()
+	ApiService := openapi.NewApiService()
 	DefaultApiController := openapi.NewDefaultApiController(ApiService)
 
 	router := openapi.NewRouter(DefaultApiController)

@@ -5,4 +5,9 @@
 # The patterns follow closely to .gitignore or .dockerignore.
 
 README.md
+Dockerfile
+
+go.mod
 main.go
+
+routes/

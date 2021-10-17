@@ -7,8 +7,8 @@ api-server: api-skelton-server api-document
 	@docker compose stop api
 	@docker compose up -d api
 
-api-skelton-server: internal/api/v1-default
-internal/api/v1-default: api/openapi-schema/openapi.yaml
+api-skelton-server: internal/api
+internal/api: api/openapi-schema/openapi.yaml
 	@scripts/generate-openapi-default-server.bash $< $@
 
 api-document: docs/api/v1

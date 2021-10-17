@@ -2,7 +2,7 @@ FROM golang:1.17 AS build
 WORKDIR /go/src
 
 COPY go.mod go.sum ./
-COPY internal/api/v1-default/go.mod ./.
+COPY internal/api/go.mod ./internal/api/
 RUN go mod download
 
 RUN ln -sf cmd/api/main.go

@@ -19,9 +19,7 @@ You can execute `ent` instead if it is installed on your host machine.
 
 | Command | Description |
 |----|----|
-| `make api-skelton-server` | generates a skelton API server in Go into `internal/api/v1-default` |
-
-After generating of the skelton server, implement a real API server in `internal/api/v1`.
+| `make api-skelton-server` | generates a skelton API server in Go into `internal/api` |
 
 ## PlantUML
 
