@@ -8,4 +8,6 @@ go.mod
 helpers.go
 impl.go
 logger.go
+model_idea.go
+model_inline_response_200.go
 routers.go

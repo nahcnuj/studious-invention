@@ -3,21 +3,34 @@ openapi: 3.0.0
 info:
   title: 題シェア（仮）
   description: 題シェア（仮） API Server
-  version: 0.0.0
+  version: 0.0.1
 
 servers:
   - url: http://localhost:8000/v1/
     description: A local API server for development
 
+
+components:
+  schemas:
+    Idea:
+      type: object
+      properties:
+        text:
+          type: string
+
 paths:
-  /hello:
+  /ideas:
     get:
-      summary: Returns "Hello world."
+      summary: Returns ideas
       responses:
         '200':
-          description: Returns "Hello world."
+          description: Returns ideas
           content:
-            text/plain:
+            application/json:
               schema:
-                type: string
-                example: Hello world.
+                type: object
+                properties:
+                  ideas:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Idea'
