@@ -1,9 +1,8 @@
 #!/usr/bin/env bash
 
-SCRIPT_DIR=$(cd $(dirname $0); pwd)
 WORKDIR_IN_DOCKER=/app
 
 if [ -z "$(docker image ls | grep 'ent')" ]; then
     docker build -f build/package/ent/Dockerfile -t ent:latest .
 fi
-${SCRIPT_DIR}/ent init $@
+docker run --rm -e XDG_CACHE_HOME=/tmp/.cache -v "${PWD}:${WORKDIR_IN_DOCKER}" -u `id -u`:`id -g` -w ${WORKDIR_IN_DOCKER} ent $@
