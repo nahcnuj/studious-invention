@@ -1,5 +1,14 @@
 # Memo
 
+## ent
+
+### Usage
+
+| Command | Description |
+|----|----|
+| `scripts/initialize-schema.bash` | initializes schema files |
+| `scripts/generate-ent.bash` | generates ORM code of ent |
+
 ## OpenAPI
 
 ### Usage
