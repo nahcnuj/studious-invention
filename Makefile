@@ -4,7 +4,8 @@ all: api-server api-document
 .PHONY: api-server api-skelton-server api-document
 api-server: api-skelton-server api-document
 	@docker compose build api
-	@$(MAKE) reboot
+	@docker compose stop api
+	@docker compose up -d api
 
 api-skelton-server: internal/api/v1-default
 internal/api/v1-default: api/openapi-schema/openapi.yaml
