@@ -1,5 +1,15 @@
 # Memo
 
+## OpenAPI
+
+### Usage
+
+| Command | Description |
+|----|----|
+| `make api-skelton-server` | generates a skelton API server in Go into `internal/api/v1-default` |
+
+After generating of the skelton server, implement a real API server in `internal/api/v1`.
+
 ## PlantUML
 
 ### Requirements
@@ -21,3 +31,11 @@
     ```
     $ sudo apt -y install fonts-ipafont fonts-ipaexfont
     ```
+
+### Usage
+
+Execute the following commands in `docs` directory.
+
+| Command | Description |
+|----|----|
+| `make` | generates SVG files from PlantUML files in `docs/spec` |
