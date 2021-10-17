@@ -9,6 +9,8 @@ services:
     container_name: api
     depends_on:
       - db
+    env_file:
+      - .env
     environment:
       TZ: Asia/Tokyo
     ports:
