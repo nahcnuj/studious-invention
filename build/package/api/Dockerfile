@@ -6,7 +6,7 @@ COPY . ./.
 ENV CGO_ENABLED=0
 RUN go get -d -v ./...
 
-RUN go build -a -installsuffix cgo -o openapi .
+RUN go build -a -installsuffix cgo -tags timetzdata -o openapi .
 
 FROM scratch AS runtime
 COPY --from=build /go/src/openapi ./
