@@ -8,7 +8,7 @@
 |----|----|
 | `scripts/ent init [schemas]` | initializes schema files |
 | `scripts/ent describe ./ent/schema` | initializes schema files |
-| `scripts/generate-ent.bash` | generates ORM code of ent |
+| `scripts/generate-ent-code.bash` | generates ent code |
 
 `scripts/ent` is a wrapper script to run the `ent` command in a docker container.
 You can execute `ent` instead if it is installed on your host machine.
