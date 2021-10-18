@@ -1,19 +1,14 @@
-.PHONY:	all
-all: api-server api-document
+.PHONY:	all api-server api-server-base
+all: api-server
 
-.PHONY: api-server api-skelton-server api-document
-api-server: api-skelton-server api-document
+api-server: api-server-base
 	@docker compose build api
 	@docker compose stop api
 	@docker compose up -d api
 
-api-skelton-server: internal/api
-internal/api: api/openapi-schema/openapi.yaml
-	@scripts/generate-openapi-default-server.bash $< $@
-
-api-document: docs/api/v1
-docs/api/v1: api/openapi-schema/openapi.yaml
-	@#scripts/generate-openapi-document.bash $< $@
+api-server-base: internal/api
+internal/api: api/schema.yaml
+	@scripts/generate-api-server-base.bash $< $@
 
 .PHONY: up restart down reboot
 up:
@@ -26,3 +21,8 @@ down:
 	@docker compose down
 
 reboot: down up
+
+.PHONY: init
+init: api
+api:
+	@git submodule add git@github.com:nahcnuj/studious-invention-api.git api

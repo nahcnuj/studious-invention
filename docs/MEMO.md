@@ -19,7 +19,7 @@ You can execute `ent` instead if it is installed on your host machine.
 
 | Command | Description |
 |----|----|
-| `make api-skelton-server` | generates a skelton API server in Go into `internal/api` |
+| `make api-server-base` | generates base code of API server in Go into `internal/api` |
 
 ## PlantUML
 
